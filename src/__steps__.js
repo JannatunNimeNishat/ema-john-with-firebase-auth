@@ -5,11 +5,13 @@
  * 4. save firebase config and export default app 
  * 5. Build > Authentication > get started > enable sign in method 
  * 6. Create sign up and Login route
- * 7.
- * 8.
- * 9.
- * 10.
- * 
- * 
+ */
+
+/** CONTEXT API (share data)
+ * 1. create a context Provider file
+ * 2. create a context and set provider
+ * 3. set the children props
+ * 4.
+ * 5.
  * 
  */
