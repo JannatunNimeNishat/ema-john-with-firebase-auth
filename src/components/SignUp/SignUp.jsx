@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import './SignUp.css'
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../providers/AuthProvider';
 
 const SignUp = () => {
+    const {createUser} = useContext(AuthContext);
+    const [success,setSuccess] = useState();
     const [error,setError] = useState('');
+
     const handleSignUp = (event) =>{
-        setError('');
+        
         event.preventDefault();
         const form= event.target;
         const email = form.email.value;
         const password = form.password.value;
         const confirm = form.confirm.value;
-        console.log(email,password,confirm);
+        
         //validation
         if(password !== confirm){
             setError('Your password did not match');
@@ -33,7 +37,23 @@ const SignUp = () => {
             setError('password should have three lowercase letters');
             return;
         }
+        //clearing pervious values
+        setError('');
+        setSuccess('');
+        console.log(email,password,confirm);
+        //creating user
+        createUser(email,password)
+        .then(result=>{
+            const loggedUser = result.user;
+            console.log(loggedUser);
+            setSuccess('user successfully created')
+           form.reset();  
+        })
+        .catch(error=>{
+            setError(error.message)
+        })
     }
+
     return (
         <div className='form-container'>
             <h2 className='form-title'>Sign Up</h2>
@@ -53,6 +73,7 @@ const SignUp = () => {
                 <input className='btn-submit' type="submit" value="Sign Up" required />
                 <p><small>Already have an account ? <Link to='/login'>Login</Link></small></p>
                 <p className='text-error'>{error}</p>
+                <p className='text-success'>{success}</p>
             </form>
         </div>
     );
